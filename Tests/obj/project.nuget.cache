@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "A8TJqWFJrFo=",
+  "dgSpecHash": "JEWPQjJ+ZSM=",
   "success": true,
   "projectFilePath": "/home/artorias/git_repo_folder/C#_finalTask/Tests/Tests.csproj",
   "expectedPackageFiles": [
     "/home/artorias/.nuget/packages/coverlet.collector/6.0.0/coverlet.collector.6.0.0.nupkg.sha512",
+    "/home/artorias/.nuget/packages/dotnetseleniumextras.waithelpers/3.11.0/dotnetseleniumextras.waithelpers.3.11.0.nupkg.sha512",
     "/home/artorias/.nuget/packages/microsoft.codecoverage/17.8.0/microsoft.codecoverage.17.8.0.nupkg.sha512",
     "/home/artorias/.nuget/packages/microsoft.net.test.sdk/17.8.0/microsoft.net.test.sdk.17.8.0.nupkg.sha512",
     "/home/artorias/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",

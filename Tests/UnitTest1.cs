@@ -53,13 +53,38 @@
 
 // [Optional] Loggers: SeriLog.
 
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.DevTools;
+using Pages;
 namespace Tests;
 
-public class UnitTest1
+public class UnitTests : IDisposable
 {
-    [Fact]
-    public void Test1()
-    {
+    private ChromeDriver driver;
+    private LoginPage logPage;
 
+    public UnitTests()
+    {
+        driver = new ChromeDriver();
+        driver.Manage().Window.Maximize();
+        driver.Navigate().GoToUrl("https://www.saucedemo.com/");
+
+        logPage = new LoginPage(driver);
+    }
+
+    [Fact]
+    public void UC_1()
+    {
+        string login = "rando";
+        string pass = "rando";
+        logPage.TextInput(login, pass);
+        logPage.ClearFields();
+        Assert.True(logPage.SubmitAndReturn() == "Epic sadface: Username is required");
+    }
+
+    public void Dispose()
+    {
+        driver.Quit();
+        driver.Dispose();
     }
 }
