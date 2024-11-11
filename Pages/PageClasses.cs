@@ -20,8 +20,6 @@ public class LoginPage
     private By login_field = By.CssSelector("#user-name");
     private By password_field = By.CssSelector("#password");
     private By submit_button = By.CssSelector("#login-button");
-    private IWebElement error_box;
-    private IWebElement dash_logo;
 
     public void TextInput(string login, string password)
     {
@@ -54,14 +52,14 @@ public class LoginPage
 
     public string ReturnErrorInfo()
     {
-        error_box = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".error-message-container")));
+        IWebElement error_box = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".error-message-container")));
 
         return error_box.FindElement(By.TagName("h3")).Text;
     }
 
     public string ReturnDash()
     {
-        dash_logo = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(".app_logo")));
+        IWebElement dash_logo = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(".app_logo")));
 
         return dash_logo.Text;
     }
