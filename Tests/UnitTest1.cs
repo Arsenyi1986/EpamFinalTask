@@ -35,16 +35,27 @@
 
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools;
+using Serilog;
 using Pages;
+
+[assembly: CollectionBehavior(CollectionBehavior.CollectionPerClass, MaxParallelThreads = 4)]
+
 namespace Tests;
 
 public class UnitTests : IDisposable
 {
     private ChromeDriver driver;
     private LoginPage logPage;
+    private ILogger logger;
 
     public UnitTests()
     {
+        logger = new LoggerConfiguration()
+            .WriteTo.Console()
+            .CreateLogger();
+
+        logger.Information("Starting tests...");
+
         driver = new ChromeDriver();
         driver.Manage().Window.Maximize();
         driver.Navigate().GoToUrl("https://www.saucedemo.com/");
@@ -52,31 +63,34 @@ public class UnitTests : IDisposable
         logPage = new LoginPage(driver);
     }
 
-    [Fact]
-    public void UC_1()
+    [Theory]
+    [InlineData("rando", "rando", "Epic sadface: Username is required")]
+    public void EmptyFieldsReturnUsernameReq(string username, string password, string result)
     {
-        logPage.TextInput("rando", "rando");
+        logPage.TextInput(username, password);
         logPage.ClearLogin();
         logPage.ClearPassword();
         logPage.Submit();
-        Assert.True(logPage.ReturnErrorInfo() == "Epic sadface: Username is required");
+        Assert.True(logPage.ReturnErrorInfo() == result);
     }
 
-    [Fact]
-    public void UC_2()
+    [Theory]
+    [InlineData("rando", "rando", "Epic sadface: Password is required")]
+    public void EmptyPasswordReturnsPasswordReq(string login, string password, string result)
     {
-        logPage.TextInput("rando", "rando");
+        logPage.TextInput(login, password);
         logPage.ClearPassword();
         logPage.Submit();
-        Assert.True(logPage.ReturnErrorInfo() == "Epic sadface: Password is required");
+        Assert.True(logPage.ReturnErrorInfo() == result);
     }
 
-    [Fact]
-    public void UC_3()
+    [Theory]
+    [InlineData("standard_user", "secret_sauce", "Swag Labs")]
+    public void CorrectCredReturnsSwagLabs(string login, string password, string result)
     {
-        logPage.TextInput("standard_user", "secret_sauce");
+        logPage.TextInput(login, password);
         logPage.Submit();
-        Assert.True(logPage.ReturnDash() == "Swag Labs");
+        Assert.True(logPage.ReturnDash() == result);
     }
 
     public void Dispose()
