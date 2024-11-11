@@ -1,3 +1,0 @@
-Tests.UnitTests.EmptyFieldsReturnUsernameReq
-Tests.UnitTests.EmptyPasswordReturnsPasswordReq
-Tests.UnitTests.CorrectCredReturnsSwagLabs
