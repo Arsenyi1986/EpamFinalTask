@@ -28,7 +28,7 @@
 // Locators: CSS ;
 // Test Runner: xUnit;
 
-// [Optional] Patterns: 1) Factory method; 2) Abstract Factory; 3) Chaine of responsibility;
+// [Optional] Patterns: 1) Factory method; 2) Abstract Factory; 3) Chain of responsibility;
 // [Optional] Test automation approach: BDD;
 // Assertions: Fluent Assertion;
 // [Optional] Loggers: SeriLog.
@@ -42,10 +42,8 @@ using Pages;
 
 namespace Tests;
 
-public class UnitTests : IDisposable
-{
-    private ChromeDriver driver;
-    private LoginPage logPage;
+public class UnitTests
+{   
     private ILogger logger;
 
     public UnitTests()
@@ -55,18 +53,27 @@ public class UnitTests : IDisposable
             .CreateLogger();
 
         logger.Information("Starting tests...");
+    }
 
-        driver = new ChromeDriver();
+    public ChromeDriver DriverSetup()
+    {
+        var driver = new ChromeDriver();
         driver.Manage().Window.Maximize();
         driver.Navigate().GoToUrl("https://www.saucedemo.com/");
 
-        logPage = new LoginPage(driver);
+        return driver;
     }
 
     [Theory]
     [InlineData("rando", "rando", "Epic sadface: Username is required")]
     public void EmptyFieldsReturnUsernameReq(string username, string password, string result)
     {
+        logger.Information("Starting test with empty credentials...");
+
+        using var driver = DriverSetup();
+
+        var logPage = new LoginPage(driver);
+
         logPage.TextInput(username, password);
         logPage.ClearLogin();
         logPage.ClearPassword();
@@ -78,6 +85,12 @@ public class UnitTests : IDisposable
     [InlineData("rando", "rando", "Epic sadface: Password is required")]
     public void EmptyPasswordReturnsPasswordReq(string login, string password, string result)
     {
+        using var driver = DriverSetup();
+
+        var logPage = new LoginPage(driver);
+
+        logger.Information("Starting test with empty password credentials...");
+
         logPage.TextInput(login, password);
         logPage.ClearPassword();
         logPage.Submit();
@@ -88,14 +101,13 @@ public class UnitTests : IDisposable
     [InlineData("standard_user", "secret_sauce", "Swag Labs")]
     public void CorrectCredReturnsSwagLabs(string login, string password, string result)
     {
+        logger.Information("Starting test with valid credentials...");
+
+        using var driver = DriverSetup();
+        var logPage = new LoginPage(driver);
+
         logPage.TextInput(login, password);
         logPage.Submit();
         Assert.True(logPage.ReturnDash() == result);
-    }
-
-    public void Dispose()
-    {
-        driver.Quit();
-        driver.Dispose();
     }
 }
