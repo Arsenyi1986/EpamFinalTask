@@ -108,3 +108,5 @@
 /home/artorias/git_repo_folder/C#_finalTask/Tests/obj/Debug/net8.0/ref/Tests.dll
 /home/artorias/git_repo_folder/C#_finalTask/Tests/bin/Debug/net8.0/Serilog.dll
 /home/artorias/git_repo_folder/C#_finalTask/Tests/bin/Debug/net8.0/Serilog.Sinks.Console.dll
+/home/artorias/git_repo_folder/C#_finalTask/Tests/bin/Debug/net8.0/Serilog.Sinks.Debug.dll
+/home/artorias/git_repo_folder/C#_finalTask/Tests/bin/Debug/net8.0/Serilog.Sinks.File.dll

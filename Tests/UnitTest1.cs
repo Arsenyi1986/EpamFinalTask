@@ -48,8 +48,17 @@ public class UnitTests
 
     public UnitTests()
     {
+        var logDirectory = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "logs");
+        if (!Directory.Exists(logDirectory))
+        {
+            Directory.CreateDirectory(logDirectory);
+        }
+
+        var logFilePath = Path.Combine(logDirectory, "log.txt");
+
         logger = new LoggerConfiguration()
-            .WriteTo.Console()
+            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
+            .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day)
             .CreateLogger();
 
         logger.Information("Starting tests...");
@@ -57,9 +66,11 @@ public class UnitTests
 
     public ChromeDriver DriverSetup()
     {
+        logger.Information("Setting up driver instance...");
         var driver = new ChromeDriver();
         driver.Manage().Window.Maximize();
         driver.Navigate().GoToUrl("https://www.saucedemo.com/");
+        logger.Information("WebDriver setup done");
 
         return driver;
     }
@@ -85,11 +96,10 @@ public class UnitTests
     [InlineData("rando", "rando", "Epic sadface: Password is required")]
     public void EmptyPasswordReturnsPasswordReq(string login, string password, string result)
     {
-        using var driver = DriverSetup();
-
-        var logPage = new LoginPage(driver);
-
         logger.Information("Starting test with empty password credentials...");
+
+        using var driver = DriverSetup();
+        var logPage = new LoginPage(driver);
 
         logPage.TextInput(login, password);
         logPage.ClearPassword();

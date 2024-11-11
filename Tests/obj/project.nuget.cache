@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "CJCKJ7f8GGQ=",
+  "dgSpecHash": "CqNdflbfMYs=",
   "success": true,
   "projectFilePath": "/home/artorias/git_repo_folder/C#_finalTask/Tests/Tests.csproj",
   "expectedPackageFiles": [
@@ -36,6 +36,8 @@
     "/home/artorias/.nuget/packages/selenium.webdriver/4.26.1/selenium.webdriver.4.26.1.nupkg.sha512",
     "/home/artorias/.nuget/packages/serilog/4.1.0/serilog.4.1.0.nupkg.sha512",
     "/home/artorias/.nuget/packages/serilog.sinks.console/6.0.0/serilog.sinks.console.6.0.0.nupkg.sha512",
+    "/home/artorias/.nuget/packages/serilog.sinks.debug/3.0.0/serilog.sinks.debug.3.0.0.nupkg.sha512",
+    "/home/artorias/.nuget/packages/serilog.sinks.file/6.0.0/serilog.sinks.file.6.0.0.nupkg.sha512",
     "/home/artorias/.nuget/packages/system.appcontext/4.3.0/system.appcontext.4.3.0.nupkg.sha512",
     "/home/artorias/.nuget/packages/system.buffers/4.3.0/system.buffers.4.3.0.nupkg.sha512",
     "/home/artorias/.nuget/packages/system.collections/4.3.0/system.collections.4.3.0.nupkg.sha512",

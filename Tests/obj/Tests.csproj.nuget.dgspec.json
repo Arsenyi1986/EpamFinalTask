@@ -135,6 +135,14 @@
               "target": "Package",
               "version": "[4.1.0, )"
             },
+            "serilog.sinks.debug": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "serilog.sinks.file": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "xunit": {
               "target": "Package",
               "version": "[2.5.3, )"
