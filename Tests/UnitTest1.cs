@@ -37,6 +37,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools;
 using Serilog;
 using Pages;
+using OpenQA.Selenium;
 
 [assembly: CollectionBehavior(CollectionBehavior.CollectionPerClass, MaxParallelThreads = 4)]
 
@@ -82,13 +83,20 @@ public class UnitTests
         logger.Information("Starting test with empty credentials...");
 
         using var driver = DriverSetup();
-
         var logPage = new LoginPage(driver);
 
+        logger.Information("Passing inputs into fields...");
         logPage.TextInput(username, password);
+        logger.Information("Done");
+        logger.Information("Clearing Login field...");
         logPage.ClearLogin();
+        logger.Information("Done");
+        logger.Information("Clearing Password field...");
         logPage.ClearPassword();
+        logger.Information("Done");
+        logger.Information("Submiting form...");
         logPage.Submit();
+        logger.Information("Done");
         Assert.True(logPage.ReturnErrorInfo() == result);
     }
 
@@ -101,9 +109,15 @@ public class UnitTests
         using var driver = DriverSetup();
         var logPage = new LoginPage(driver);
 
+        logger.Information("Passing inputs into fields...");
         logPage.TextInput(login, password);
+        logger.Information("Done");
+        logger.Information("Clearing Password field...");
         logPage.ClearPassword();
+        logger.Information("Done");
+        logger.Information("Submiting form...");
         logPage.Submit();
+        logger.Information("Done");
         Assert.True(logPage.ReturnErrorInfo() == result);
     }
 
@@ -116,8 +130,12 @@ public class UnitTests
         using var driver = DriverSetup();
         var logPage = new LoginPage(driver);
 
+        logger.Information("Passing inputs into fields...");
         logPage.TextInput(login, password);
+        logger.Information("Done");
+        logger.Information("Submiting form...");
         logPage.Submit();
+        logger.Information("Done");
         Assert.True(logPage.ReturnDash() == result);
     }
 }
