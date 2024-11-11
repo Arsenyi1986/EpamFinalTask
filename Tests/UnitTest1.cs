@@ -34,7 +34,7 @@
 // [Optional] Loggers: SeriLog.
 
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.DevTools;
+using OpenQA.Selenium.Firefox;
 using Serilog;
 using Pages;
 using OpenQA.Selenium;
@@ -66,10 +66,28 @@ public class UnitTests
         logger.Information("Starting tests...");
     }
 
-    public ChromeDriver DriverSetup()
+    public IWebDriver DriverSetup(string browser)
     {
         logger.Information("Setting up driver instance...");
-        var driver = new ChromeDriver();
+        
+        IWebDriver driver;
+        switch (browser.ToLower())
+        {
+            case "firefox":
+                logger.Information("Setting up FireFox driver...");
+                var firefoxOptions = new FirefoxOptions();
+                driver = new FirefoxDriver(firefoxOptions);
+                logger.Information("Done");
+                break;
+            case "chrome":
+            default:
+                logger.Information("Setting up Chrome driver...");
+                var chromeOptions = new ChromeOptions();
+                driver = new ChromeDriver(chromeOptions);
+                logger.Information("Done");
+                break;
+        }
+
         driver.Manage().Window.Maximize();
         driver.Navigate().GoToUrl("https://www.saucedemo.com/");
         logger.Information("WebDriver setup done");
@@ -78,12 +96,13 @@ public class UnitTests
     }
 
     [Theory]
-    [InlineData("rando", "rando", "Epic sadface: Username is required")]
-    public void EmptyFieldsReturnUsernameReq(string username, string password, string result)
+    [InlineData("chrome", "rando", "rando", "Epic sadface: Username is required")]
+    [InlineData("firefox", "rando", "rando", "Epic sadface: Username is required")]
+    public void EmptyFieldsReturnUsernameReq(string browser, string username, string password, string result)
     {
         logger.Information("Starting test with empty credentials...");
 
-        using var driver = DriverSetup();
+        using var driver = DriverSetup(browser);
         var logPage = new LoginPage(driver);
 
         logger.Information("Passing inputs into fields...");
@@ -103,12 +122,13 @@ public class UnitTests
     }
 
     [Theory]
-    [InlineData("rando", "rando", "Password is required")]
-    public void EmptyPasswordReturnsPasswordReq(string login, string password, string result)
+    [InlineData("chrome", "rando", "rando", "Password is required")]
+    [InlineData("firefox", "rando", "rando", "Password is required")]
+    public void EmptyPasswordReturnsPasswordReq(string browser, string login, string password, string result)
     {
         logger.Information("Starting test with empty password credentials...");
 
-        using var driver = DriverSetup();
+        using var driver = DriverSetup(browser);
         var logPage = new LoginPage(driver);
 
         logger.Information("Passing inputs into fields...");
@@ -125,12 +145,13 @@ public class UnitTests
     }
 
     [Theory]
-    [InlineData("standard_user", "secret_sauce", "Swag Labs")]
-    public void CorrectCredReturnsSwagLabs(string login, string password, string result)
+    [InlineData("chrome", "standard_user", "secret_sauce", "Swag Labs")]
+    [InlineData("firefox", "standard_user", "secret_sauce", "Swag Labs")]
+    public void CorrectCredReturnsSwagLabs(string browser, string login, string password, string result)
     {
         logger.Information("Starting test with valid credentials...");
 
-        using var driver = DriverSetup();
+        using var driver = DriverSetup(browser);
         var logPage = new LoginPage(driver);
 
         logger.Information("Passing inputs into fields...");
