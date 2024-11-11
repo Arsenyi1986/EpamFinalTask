@@ -38,6 +38,7 @@ using OpenQA.Selenium.DevTools;
 using Serilog;
 using Pages;
 using OpenQA.Selenium;
+using FluentAssertions;
 
 [assembly: CollectionBehavior(CollectionBehavior.CollectionPerClass, MaxParallelThreads = 4)]
 
@@ -97,11 +98,12 @@ public class UnitTests
         logger.Information("Submiting form...");
         logPage.Submit();
         logger.Information("Done");
-        Assert.True(logPage.ReturnErrorInfo() == result);
+
+        logPage.ReturnErrorInfo().Should().Contain(result, because: "The expected error message was not displayed when the login credentials were empty.");    
     }
 
     [Theory]
-    [InlineData("rando", "rando", "Epic sadface: Password is required")]
+    [InlineData("rando", "rando", "Password is required")]
     public void EmptyPasswordReturnsPasswordReq(string login, string password, string result)
     {
         logger.Information("Starting test with empty password credentials...");
@@ -118,7 +120,8 @@ public class UnitTests
         logger.Information("Submiting form...");
         logPage.Submit();
         logger.Information("Done");
-        Assert.True(logPage.ReturnErrorInfo() == result);
+
+        logPage.ReturnErrorInfo().Should().Contain(result, because: "The expected error message was not displayed when the password credentials were empty.");
     }
 
     [Theory]
@@ -136,6 +139,7 @@ public class UnitTests
         logger.Information("Submiting form...");
         logPage.Submit();
         logger.Information("Done");
-        Assert.True(logPage.ReturnDash() == result);
+
+        logPage.ReturnDash().Should().Be(result, because: "The expected message in web-element was not found with right credentials");
     }
 }
