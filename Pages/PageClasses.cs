@@ -17,9 +17,9 @@ public class LoginPage
         this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
     }
 
-    private By login_field = By.Id("user-name");
-    private By password_field = By.Id("password");
-    private By submit_button = By.Id("login-button");
+    private By login_field = By.CssSelector("#user-name");
+    private By password_field = By.CssSelector("#password");
+    private By submit_button = By.CssSelector("#login-button");
     private IWebElement error_box;
     private IWebElement dash_logo;
 
@@ -54,14 +54,14 @@ public class LoginPage
 
     public string ReturnErrorInfo()
     {
-        error_box = wait.Until(ExpectedConditions.ElementIsVisible(By.ClassName("error-message-container")));
+        error_box = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".error-message-container")));
 
         return error_box.FindElement(By.TagName("h3")).Text;
     }
 
     public string ReturnDash()
     {
-        dash_logo = wait.Until(ExpectedConditions.ElementExists(By.ClassName("app_logo")));
+        dash_logo = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(".app_logo")));
 
         return dash_logo.Text;
     }
