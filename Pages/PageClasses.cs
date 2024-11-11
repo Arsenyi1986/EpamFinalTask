@@ -20,19 +20,13 @@ public class LoginPage
     private By login_field = By.Id("user-name");
     private By password_field = By.Id("password");
     private By submit_button = By.Id("login-button");
-    private IWebElement result_box;
+    private IWebElement error_box;
+    private IWebElement dash_logo;
 
     public void TextInput(string login, string password)
     {
         driver.FindElement(login_field).SendKeys(login);
         driver.FindElement(password_field).SendKeys(password);
-        Thread.Sleep(1000);
-    }
-
-    public void ClearFields()
-    {
-        ClearLogin();
-        ClearPassword();
     }
 
     public void ClearLogin()
@@ -53,34 +47,22 @@ public class LoginPage
         actions.MoveToElement(passwordInput).Click().SendKeys(Keys.Control + "a").SendKeys(Keys.Backspace).Build().Perform();
     }
 
-    public string SubmitAndReturn()
+    public void Submit()
     {
-        CheckClearFields();
         driver.FindElement(submit_button).Click();
-
-        result_box = wait.Until(ExpectedConditions.ElementIsVisible(By.ClassName("error-message-container")));
-
-        return result_box.FindElement(By.TagName("h3")).Text;
     }
 
-    public void CheckClearFields()
+    public string ReturnErrorInfo()
     {
-        if (driver.FindElement(login_field).GetAttribute("value") != null)
-        {
-            driver.FindElement(login_field).Clear();
-        }
-        else
-        {
-            Console.WriteLine("login's clear");
-        }
+        error_box = wait.Until(ExpectedConditions.ElementIsVisible(By.ClassName("error-message-container")));
 
-        if (driver.FindElement(password_field).GetAttribute("value") != null)
-        {
-            driver.FindElement(password_field).Clear();
-        }
-        else
-        {
-            Console.WriteLine("password's clear");
-        }
+        return error_box.FindElement(By.TagName("h3")).Text;
+    }
+
+    public string ReturnDash()
+    {
+        dash_logo = wait.Until(ExpectedConditions.ElementExists(By.ClassName("app_logo")));
+
+        return dash_logo.Text;
     }
 }

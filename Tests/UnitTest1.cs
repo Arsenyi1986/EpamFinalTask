@@ -55,21 +55,28 @@ public class UnitTests : IDisposable
     [Fact]
     public void UC_1()
     {
-        string login = "rando";
-        string pass = "rando";
-        logPage.TextInput(login, pass);
-        logPage.ClearFields();
-        Assert.True(logPage.SubmitAndReturn() == "Epic sadface: Username is required");
+        logPage.TextInput("rando", "rando");
+        logPage.ClearLogin();
+        logPage.ClearPassword();
+        logPage.Submit();
+        Assert.True(logPage.ReturnErrorInfo() == "Epic sadface: Username is required");
     }
 
     [Fact]
     public void UC_2()
     {
-        string login = "rando";
-        string pass = "rando";
-        logPage.TextInput(login, pass);
+        logPage.TextInput("rando", "rando");
         logPage.ClearPassword();
-        Assert.True(logPage.SubmitAndReturn() == "Epic sadface: Password is required");
+        logPage.Submit();
+        Assert.True(logPage.ReturnErrorInfo() == "Epic sadface: Password is required");
+    }
+
+    [Fact]
+    public void UC_3()
+    {
+        logPage.TextInput("standard_user", "secret_sauce");
+        logPage.Submit();
+        Assert.True(logPage.ReturnDash() == "Swag Labs");
     }
 
     public void Dispose()
