@@ -1,0 +1,28 @@
+# Ignore build output directories
+bin/
+obj/
+out/
+.vs/
+
+#Ignore log files
+logs/
+*.log
+
+#Ignore user-specific files
+.vscode/
+.idea/
+
+# Ignore NuGet package restore files
+*.nupkg
+packages/
+
+# Ignore test results
+test-results/
+
+# Ignore the driver executables
+chromedriver.exe
+geckodriver.exe
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
