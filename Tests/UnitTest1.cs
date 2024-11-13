@@ -11,7 +11,7 @@ namespace Tests;
 
 public class UnitTests
 {   
-    private ILogger logger;
+    private readonly ILogger logger;
 
     public UnitTests()
     {
@@ -45,12 +45,15 @@ public class UnitTests
                 logger.Information("Done");
                 break;
             case "chrome":
-            default:
                 logger.Information("Setting up Chrome driver...");
                 var chromeOptions = new ChromeOptions();
                 driver = new ChromeDriver(chromeOptions);
                 logger.Information("Done");
                 break;
+            default:
+                logger.Error("The chosen browser is not supported.");
+                throw new ArgumentException(browser);
+                
         }
 
         driver.Manage().Window.Maximize();

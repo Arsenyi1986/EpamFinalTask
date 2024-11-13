@@ -2,14 +2,13 @@
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System;
 
 namespace Pages;
 
 public class LoginPage
 {
-    private IWebDriver driver;
-    private WebDriverWait wait;
+    private readonly IWebDriver driver;
+    private readonly WebDriverWait wait;
     
     public LoginPage(IWebDriver driver)
     {
@@ -25,9 +24,9 @@ public class LoginPage
         }
     }
 
-    private By login_field;
-    private By password_field;
-    private By submit_button;
+    private By? login_field;
+    private By? password_field;
+    private By? submit_button;
 
     public void ValidateElements()
     {
@@ -83,7 +82,7 @@ public class LoginPage
         }
     }
 
-    public string ReturnErrorInfo()
+    public string? ReturnErrorInfo()
     {
         try
         {
@@ -98,7 +97,7 @@ public class LoginPage
         }
     }
 
-    public string ReturnDash()
+    public string? ReturnDash()
     {
         try
         {
