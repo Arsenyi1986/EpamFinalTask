@@ -9,7 +9,7 @@ namespace Tests;
 
 public class UnitTests
 {   
-    private readonly ILogger _logger;
+    private readonly Serilog.Core.Logger _logger;
 
     public UnitTests()
     {
