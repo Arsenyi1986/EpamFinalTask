@@ -14,19 +14,11 @@ public class LoginPage
     {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-        try
-        {
-            ValidateElements();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
     }
 
-    private By? login_field;
-    private By? password_field;
-    private By? submit_button;
+    private readonly By? login_field = By.CssSelector("#user-name");
+    private readonly By? password_field = By.CssSelector("#password");
+    private readonly By? submit_button = By.CssSelector("#login-button");
 
     public By? LoginField 
     {
@@ -36,20 +28,6 @@ public class LoginPage
     public By? PasswordField 
     {
         get => password_field;
-    }
-
-    public void ValidateElements()
-    {
-        try
-        {
-            login_field = By.CssSelector("#user-name");
-            password_field = By.CssSelector("#password");
-            submit_button = By.CssSelector("#login-button");
-        }
-        catch (NoSuchElementException)
-        {
-            throw new ArgumentException("Some necessary WebElements were not found.");
-        }
     }
 
     public void TextInput(string login, string password)
