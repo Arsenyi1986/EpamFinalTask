@@ -1,6 +1,3 @@
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Edge;
 using Serilog;
 using Pages;
 using OpenQA.Selenium;

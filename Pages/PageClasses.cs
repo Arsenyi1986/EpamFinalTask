@@ -13,27 +13,27 @@ public class LoginPage
     public LoginPage(IWebDriver driver)
     {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
     }
 
-    private readonly By? login_field = By.CssSelector("#user-name");
-    private readonly By? password_field = By.CssSelector("#password");
-    private readonly By? submit_button = By.CssSelector("#login-button");
+    private readonly By? _loginfield = By.CssSelector("#user-name");
+    private readonly By? _passwordfield = By.CssSelector("#password");
+    private readonly By? _submitbutton = By.CssSelector("#login-button");
 
     public By? LoginField 
     {
-        get => login_field;
+        get => _loginfield;
     }
 
     public By? PasswordField 
     {
-        get => password_field;
+        get => _passwordfield;
     }
 
     public void TextInput(string login, string password)
     {
-        driver.FindElement(login_field).SendKeys(login);
-        driver.FindElement(password_field).SendKeys(password);
+        driver.FindElement(_loginfield).SendKeys(login);
+        driver.FindElement(_passwordfield).SendKeys(password);
     }
 
     public void ClearField(By? field)
@@ -47,7 +47,7 @@ public class LoginPage
     {
         try
         {
-            driver.FindElement(submit_button).Click();
+            driver.FindElement(_submitbutton).Click();
         }
         catch (NoSuchElementException)
         {
