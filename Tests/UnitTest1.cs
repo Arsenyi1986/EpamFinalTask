@@ -47,20 +47,12 @@ public class UnitTests
         _logger.Information("Starting test with empty credentials...");
 
         using var driver = DriverSetup(browser);
-        var logPage = new LoginPage(driver);
+        var logPage = new LoginPage(driver, _logger);
 
-        _logger.Information("Passing inputs into fields...");
         logPage.TextInput(username, password);
-        _logger.Information("Done");
-        _logger.Information("Clearing Login field...");
         logPage.ClearField(logPage.LoginField);
-        _logger.Information("Done");
-        _logger.Information("Clearing Password field...");
         logPage.ClearField(logPage.PasswordField);
-        _logger.Information("Done");
-        _logger.Information("Submitting form...");
         logPage.Submit();
-        _logger.Information("Done");
 
         logPage.ReturnErrorInfo().Should().Contain(result, because: "The expected error message was not displayed when the login credentials were empty.");    
     }
@@ -74,17 +66,11 @@ public class UnitTests
         _logger.Information("Starting test with empty password credentials...");
 
         using var driver = DriverSetup(browser);
-        var logPage = new LoginPage(driver);
+        var logPage = new LoginPage(driver, _logger);
 
-        _logger.Information("Passing inputs into fields...");
         logPage.TextInput(login, password);
-        _logger.Information("Done");
-        _logger.Information("Clearing Password field...");
         logPage.ClearField(logPage.PasswordField);
-        _logger.Information("Done");
-        _logger.Information("Submitting form...");
         logPage.Submit();
-        _logger.Information("Done");
 
         logPage.ReturnErrorInfo().Should().Contain(result, because: "The expected error message was not displayed when the password credentials were empty.");
     }
@@ -98,14 +84,10 @@ public class UnitTests
         _logger.Information("Starting test with valid credentials...");
 
         using var driver = DriverSetup(browser);
-        var logPage = new LoginPage(driver);
+        var logPage = new LoginPage(driver, _logger);
 
-        _logger.Information("Passing inputs into fields...");
         logPage.TextInput(login, password);
-        _logger.Information("Done");
-        _logger.Information("Submitting form...");
         logPage.Submit();
-        _logger.Information("Done");
 
         logPage.ReturnDash().Should().Be(result, because: "The expected message in web-element was not found with right credentials");
     }

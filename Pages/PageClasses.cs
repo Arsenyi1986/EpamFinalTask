@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using Serilog;
 
 namespace Pages;
 
@@ -9,10 +10,12 @@ public class LoginPage
 {
     private readonly IWebDriver driver;
     private readonly WebDriverWait wait;
+    private readonly ILogger _logger;
     
-    public LoginPage(IWebDriver driver)
+    public LoginPage(IWebDriver driver, ILogger logger)
     {
         this.driver = driver;
+        this._logger = logger;
         wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
     }
 
@@ -32,19 +35,25 @@ public class LoginPage
 
     public void TextInput(string login, string password)
     {
+        _logger.Information("Passing inputs into fields...");
         driver.FindElement(_loginfield).SendKeys(login);
         driver.FindElement(_passwordfield).SendKeys(password);
+        _logger.Information("Done");
     }
 
     public void ClearField(By? field)
     {
+        _logger.Information("Clearing {Field} field...", field);
         IWebElement? element = driver.FindElement(field);
         element.Clear();
         new Actions(driver).MoveToElement(element).Click().SendKeys(Keys.Control + "a").SendKeys(Keys.Backspace).Build().Perform();
+        _logger.Information("Done");
     }
 
     public void Submit()
     {
+        _logger.Information("Submitting form...");
+
         try
         {
             driver.FindElement(_submitbutton).Click();
@@ -57,6 +66,8 @@ public class LoginPage
         {
             Console.WriteLine("The 'Submit button' element is not interactable");
         }
+
+        _logger.Information("Done");
     }
 
     public string? ReturnErrorInfo()
