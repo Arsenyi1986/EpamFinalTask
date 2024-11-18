@@ -85,10 +85,10 @@ public class UnitTests
         logPage.TextInput(username, password);
         logger.Information("Done");
         logger.Information("Clearing Login field...");
-        logPage.ClearLogin();
+        logPage.ClearField(logPage.LoginField);
         logger.Information("Done");
         logger.Information("Clearing Password field...");
-        logPage.ClearPassword();
+        logPage.ClearField(logPage.PasswordField);
         logger.Information("Done");
         logger.Information("Submiting form...");
         logPage.Submit();
@@ -112,7 +112,7 @@ public class UnitTests
         logPage.TextInput(login, password);
         logger.Information("Done");
         logger.Information("Clearing Password field...");
-        logPage.ClearPassword();
+        logPage.ClearField(logPage.PasswordField);
         logger.Information("Done");
         logger.Information("Submiting form...");
         logPage.Submit();

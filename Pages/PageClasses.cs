@@ -28,6 +28,16 @@ public class LoginPage
     private By? password_field;
     private By? submit_button;
 
+    public By? LoginField 
+    {
+        get => login_field;
+    }
+
+    public By? PasswordField 
+    {
+        get => password_field;
+    }
+
     public void ValidateElements()
     {
         try
@@ -48,22 +58,11 @@ public class LoginPage
         driver.FindElement(password_field).SendKeys(password);
     }
 
-    public void ClearLogin()
+    public void ClearField(By? field)
     {
-        driver.FindElement(login_field).Clear();
-        IWebElement loginInput = driver.FindElement(login_field);
-
-        Actions actions = new Actions(driver);
-        actions.MoveToElement(loginInput).Click().SendKeys(Keys.Control + "a").SendKeys(Keys.Backspace).Build().Perform();
-    }
-
-    public void ClearPassword()
-    {
-        driver.FindElement(password_field).Clear();
-        IWebElement passwordInput = driver.FindElement(password_field);
-
-        Actions actions = new Actions(driver);
-        actions.MoveToElement(passwordInput).Click().SendKeys(Keys.Control + "a").SendKeys(Keys.Backspace).Build().Perform();
+        IWebElement? element = driver.FindElement(field);
+        element.Clear();
+        new Actions(driver).MoveToElement(element).Click().SendKeys(Keys.Control + "a").SendKeys(Keys.Backspace).Build().Perform();
     }
 
     public void Submit()
