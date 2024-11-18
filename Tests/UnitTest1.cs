@@ -1,5 +1,6 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Edge;
 using Serilog;
 using Pages;
 using OpenQA.Selenium;
@@ -50,6 +51,12 @@ public class UnitTests
                 driver = new ChromeDriver(chromeOptions);
                 logger.Information("Done");
                 break;
+            case "edge":
+                logger.Information("Setting up Edge driver...");
+                var edgeOptions = new EdgeOptions();
+                driver = new EdgeDriver(edgeOptions);
+                logger.Information("Done");
+                break;
             default:
                 logger.Error("The chosen browser is not supported.");
                 throw new ArgumentException(browser);
@@ -66,6 +73,7 @@ public class UnitTests
     [Theory]
     [InlineData("chrome", "rando", "rando", "Epic sadface: Username is required")]
     [InlineData("firefox", "rando", "rando", "Epic sadface: Username is required")]
+    [InlineData("edge", "rando", "rando", "Epic sadface: Username is required")]
     public void EmptyFieldsReturnUsernameReq(string browser, string username, string password, string result)
     {
         logger.Information("Starting test with empty credentials...");
@@ -92,6 +100,7 @@ public class UnitTests
     [Theory]
     [InlineData("chrome", "rando", "rando", "Password is required")]
     [InlineData("firefox", "rando", "rando", "Password is required")]
+    [InlineData("edge", "rando", "rando", "Password is required")]
     public void EmptyPasswordReturnsPasswordReq(string browser, string login, string password, string result)
     {
         logger.Information("Starting test with empty password credentials...");
@@ -115,6 +124,7 @@ public class UnitTests
     [Theory]
     [InlineData("chrome", "standard_user", "secret_sauce", "Swag Labs")]
     [InlineData("firefox", "standard_user", "secret_sauce", "Swag Labs")]
+    [InlineData("edge", "standard_user", "secret_sauce", "Swag Labs")]
     public void CorrectCredReturnsSwagLabs(string browser, string login, string password, string result)
     {
         logger.Information("Starting test with valid credentials...");
