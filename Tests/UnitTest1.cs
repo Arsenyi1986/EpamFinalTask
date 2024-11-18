@@ -31,11 +31,9 @@ public class UnitTests
 
     public IWebDriver DriverSetup(string browser)
     {
-        _logger.Information("Setting up driver instance...");
-        var driver = DriverFactory.GetDriver(browser);
+        var driver = DriverFactory.GetDriver(browser, _logger);
         driver.Manage().Window.Maximize();
         driver.Navigate().GoToUrl("https://www.saucedemo.com/");
-        _logger.Information("WebDriver setup done");
 
         return driver;
     }
