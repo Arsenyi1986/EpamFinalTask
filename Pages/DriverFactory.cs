@@ -10,7 +10,7 @@ public static class DriverFactory
 {
     public static IWebDriver GetDriver(string browser, ILogger logger)
     {
-        logger.Information($"Starting setup for {browser} driver...");
+        logger.Information("Starting setup for {Browser} driver...", browser);
 
         IWebDriver driver = browser.ToLower() switch
         {
@@ -20,7 +20,7 @@ public static class DriverFactory
             _ => throw new ArgumentException("Unsupported browser")
         };
 
-        logger.Information($"{browser} driver setup complete");
+        logger.Information("{Browser} driver setup complete", browser);
         return driver;
     }
 }

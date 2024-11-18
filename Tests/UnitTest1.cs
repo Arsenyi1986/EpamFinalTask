@@ -58,7 +58,7 @@ public class UnitTests
         _logger.Information("Clearing Password field...");
         logPage.ClearField(logPage.PasswordField);
         _logger.Information("Done");
-        _logger.Information("Submiting form...");
+        _logger.Information("Submitting form...");
         logPage.Submit();
         _logger.Information("Done");
 
@@ -82,7 +82,7 @@ public class UnitTests
         _logger.Information("Clearing Password field...");
         logPage.ClearField(logPage.PasswordField);
         _logger.Information("Done");
-        _logger.Information("Submiting form...");
+        _logger.Information("Submitting form...");
         logPage.Submit();
         _logger.Information("Done");
 
@@ -103,7 +103,7 @@ public class UnitTests
         _logger.Information("Passing inputs into fields...");
         logPage.TextInput(login, password);
         _logger.Information("Done");
-        _logger.Information("Submiting form...");
+        _logger.Information("Submitting form...");
         logPage.Submit();
         _logger.Information("Done");
 
