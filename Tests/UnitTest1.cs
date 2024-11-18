@@ -32,7 +32,6 @@ public class UnitTests
     public IWebDriver DriverSetup(string browser)
     {
         var driver = DriverFactory.GetDriver(browser, _logger);
-        driver.Manage().Window.Maximize();
         driver.Navigate().GoToUrl("https://www.saucedemo.com/");
 
         return driver;

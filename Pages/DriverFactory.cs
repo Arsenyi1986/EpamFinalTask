@@ -12,13 +12,30 @@ public static class DriverFactory
     {
         logger.Information("Starting setup for {Browser} driver...", browser);
 
-        IWebDriver driver = browser.ToLower() switch
+        IWebDriver driver;
+        switch (browser.ToLower())
         {
-            "firefox" => new FirefoxDriver(new FirefoxOptions()),
-            "chrome" => new ChromeDriver(new ChromeOptions()),
-            "edge" => new EdgeDriver(new EdgeOptions()),
-            _ => throw new ArgumentException("Unsupported browser")
-        };
+            case "chrome":
+                var chromeOptions = new ChromeOptions();
+                chromeOptions.AddArgument("--headless");
+                chromeOptions.AddArgument("--disable-extensions");
+                chromeOptions.AddArgument("--disable-gpu");
+                driver = new ChromeDriver(chromeOptions);
+                break;
+            case "firefox":
+                var firefoxOptions = new FirefoxOptions();
+                firefoxOptions.AddArgument("-headless");
+                driver = new FirefoxDriver(firefoxOptions);
+                break;
+            case "edge":
+                var edgeOptions = new EdgeOptions();
+                edgeOptions.AddArgument("headless");
+                edgeOptions.AddArgument("disable-extensions");
+                driver = new EdgeDriver(edgeOptions);
+                break;
+            default:
+                throw new ArgumentException($"Browser {browser} is not supported");
+        }
 
         logger.Information("{Browser} driver setup complete", browser);
         return driver;
