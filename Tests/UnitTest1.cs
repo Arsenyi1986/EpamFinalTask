@@ -35,34 +35,7 @@ public class UnitTests
     public IWebDriver DriverSetup(string browser)
     {
         logger.Information("Setting up driver instance...");
-        
-        IWebDriver driver;
-        switch (browser.ToLower())
-        {
-            case "firefox":
-                logger.Information("Setting up FireFox driver...");
-                var firefoxOptions = new FirefoxOptions();
-                driver = new FirefoxDriver(firefoxOptions);
-                logger.Information("Done");
-                break;
-            case "chrome":
-                logger.Information("Setting up Chrome driver...");
-                var chromeOptions = new ChromeOptions();
-                driver = new ChromeDriver(chromeOptions);
-                logger.Information("Done");
-                break;
-            case "edge":
-                logger.Information("Setting up Edge driver...");
-                var edgeOptions = new EdgeOptions();
-                driver = new EdgeDriver(edgeOptions);
-                logger.Information("Done");
-                break;
-            default:
-                logger.Error("The chosen browser is not supported.");
-                throw new ArgumentException(browser);
-                
-        }
-
+        var driver = DriverFactory.GetDriver(browser);
         driver.Manage().Window.Maximize();
         driver.Navigate().GoToUrl("https://www.saucedemo.com/");
         logger.Information("WebDriver setup done");
