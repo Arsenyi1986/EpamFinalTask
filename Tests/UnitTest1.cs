@@ -74,7 +74,7 @@ public class UnitTests
     [InlineData("chrome", "rando", "rando", "Epic sadface: Username is required")]
     [InlineData("firefox", "rando", "rando", "Epic sadface: Username is required")]
     [InlineData("edge", "rando", "rando", "Epic sadface: Username is required")]
-    public void EmptyFieldsReturnUsernameReq(string browser, string username, string password, string result)
+    public void EmptyFieldsReturnUsernameRequirements(string browser, string username, string password, string result)
     {
         logger.Information("Starting test with empty credentials...");
 
@@ -101,7 +101,7 @@ public class UnitTests
     [InlineData("chrome", "rando", "rando", "Password is required")]
     [InlineData("firefox", "rando", "rando", "Password is required")]
     [InlineData("edge", "rando", "rando", "Password is required")]
-    public void EmptyPasswordReturnsPasswordReq(string browser, string login, string password, string result)
+    public void EmptyPasswordReturnsPasswordRequirements(string browser, string login, string password, string result)
     {
         logger.Information("Starting test with empty password credentials...");
 
@@ -125,7 +125,7 @@ public class UnitTests
     [InlineData("chrome", "standard_user", "secret_sauce", "Swag Labs")]
     [InlineData("firefox", "standard_user", "secret_sauce", "Swag Labs")]
     [InlineData("edge", "standard_user", "secret_sauce", "Swag Labs")]
-    public void CorrectCredReturnsSwagLabs(string browser, string login, string password, string result)
+    public void CorrectCredentialsReturnsSwagLabs(string browser, string login, string password, string result)
     {
         logger.Information("Starting test with valid credentials...");
 
