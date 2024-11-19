@@ -41,7 +41,7 @@ public class UnitTests
     [InlineData("chrome", "rando", "rando", "Epic sadface: Username is required")]
     [InlineData("firefox", "rando", "rando", "Epic sadface: Username is required")]
     [InlineData("edge", "rando", "rando", "Epic sadface: Username is required")]
-    public void EmptyFieldsReturnUsernameRequired(string browser, string username, string password, string result)
+    public void EmptyFieldsReturnsUsernameRequired(string browser, string username, string password, string result)
     {
         _logger.Information("Starting test with empty credentials...");
 
