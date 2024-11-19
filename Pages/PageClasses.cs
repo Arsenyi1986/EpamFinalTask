@@ -76,7 +76,7 @@ public class LoginPage
         {
             IWebElement error_box = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".error-message-container")));
 
-            return error_box.FindElement(By.TagName("h3")).Text;
+            return error_box.FindElement(By.CssSelector("h3")).Text;
         }
         catch (TimeoutException)
         {
