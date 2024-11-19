@@ -8,55 +8,56 @@ namespace Pages;
 
 public class LoginPage
 {
-    private readonly IWebDriver driver;
-    private readonly WebDriverWait wait;
-    private readonly ILogger _logger;
+    private readonly IWebDriver _driver;
+    private readonly WebDriverWait _wait;
+    private readonly Serilog.Core.Logger _logger;
     
-    public LoginPage(IWebDriver driver, ILogger logger)
-    {
-        this.driver = driver;
-        this._logger = logger;
-        wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-    }
+    private readonly By? _loginField = By.CssSelector("#user-name");
+    private readonly By? _passwordField = By.CssSelector("#password");
+    private readonly By? _submitButton = By.CssSelector("#login-button");
+    private readonly By? _errorBox = By.CssSelector(".error-message-container");
 
-    private readonly By? _loginfield = By.CssSelector("#user-name");
-    private readonly By? _passwordfield = By.CssSelector("#password");
-    private readonly By? _submitbutton = By.CssSelector("#login-button");
+    public LoginPage(IWebDriver driver, Serilog.Core.Logger logger)
+    {
+        this._driver = driver;
+        this._logger = logger;
+        _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+    }
 
     public By? LoginField 
     {
-        get => _loginfield;
+        get => _loginField;
     }
 
     public By? PasswordField 
     {
-        get => _passwordfield;
+        get => _passwordField;
     }
 
     public void TextInput(string login, string password)
     {
         _logger.Information("Passing inputs into fields...");
-        driver.FindElement(_loginfield).SendKeys(login);
-        driver.FindElement(_passwordfield).SendKeys(password);
+        _driver.FindElement(_loginField).SendKeys(login);
+        _driver.FindElement(_passwordField).SendKeys(password);
         _logger.Information("Done");
     }
 
     public void ClearField(By? field)
     {
         _logger.Information("Clearing {Field} field...", field);
-        IWebElement? element = driver.FindElement(field);
+        IWebElement? element = _driver.FindElement(field);
         element.Clear();
-        new Actions(driver).MoveToElement(element).Click().SendKeys(Keys.Control + "a").SendKeys(Keys.Backspace).Build().Perform();
+        new Actions(_driver).MoveToElement(element).Click().SendKeys(Keys.Control + "a").SendKeys(Keys.Backspace).Build().Perform();
         _logger.Information("Done");
     }
 
-    public void Submit()
+    public DashboardPage? Submit()
     {
         _logger.Information("Submitting form...");
 
         try
         {
-            driver.FindElement(_submitbutton).Click();
+            _driver.FindElement(_submitButton).Click();
         }
         catch (NoSuchElementException)
         {
@@ -67,16 +68,23 @@ public class LoginPage
             Console.WriteLine("The 'Submit button' element is not interactable");
         }
 
-        _logger.Information("Done");
+        if (_wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(_errorBox)).Count > 0)
+        {
+            _logger.Error("Login failed. Error: {WebElement}", _driver.FindElement(_errorBox).Text);
+            return null;
+        }
+        
+        _logger.Information("Done. Login successful. Navigating to DashboardPage.");
+        return new DashboardPage(_driver, _logger);
     }
 
     public string? ReturnErrorInfo()
     {
         try
         {
-            IWebElement error_box = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".error-message-container")));
+            IWebElement errorElement = _wait.Until(ExpectedConditions.ElementIsVisible(_errorBox));
 
-            return error_box.FindElement(By.CssSelector("h3")).Text;
+            return errorElement.FindElement(By.CssSelector("h3")).Text;
         }
         catch (TimeoutException)
         {
@@ -84,19 +92,33 @@ public class LoginPage
             return null;
         }
     }
+}
 
-    public string? ReturnDash()
+public class DashboardPage
+{
+    private readonly IWebDriver _driver;
+    private readonly WebDriverWait _wait;
+    private readonly Serilog.Core.Logger _logger;
+    private readonly By? _logo = By.CssSelector(".app_logo");
+
+    public DashboardPage(IWebDriver driver, Serilog.Core.Logger logger)
+    {
+        this._driver = driver;
+        _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        this._logger = logger;
+    }
+
+    public string GetDashboardText()
     {
         try
         {
-            IWebElement dash_logo = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(".app_logo")));
-
-            return dash_logo.Text;
+            _logger.Information("Attempting to retrieve dashboard text...");
+            return _wait.Until(ExpectedConditions.ElementIsVisible(_logo)).Text;
         }
         catch (TimeoutException)
         {
-            Console.WriteLine("The dashboard message was not found in expected amount of time.");
-            return null;
+            _logger.Error("Dashboard logo was not found in the expected amount of time.");
+            return string.Empty;
         }
-    }
+    } 
 }

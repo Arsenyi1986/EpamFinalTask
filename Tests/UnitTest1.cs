@@ -86,8 +86,9 @@ public class UnitTests
         var logPage = new LoginPage(driver, _logger);
 
         logPage.TextInput(login, password);
-        logPage.Submit();
+        var dashPage = logPage.Submit();
 
-        logPage.ReturnDash().Should().Be(result, because: "The expected message in web-element was not found with right credentials");
+        dashPage.Should().NotBeNull("Login was successful and should navigate to DashboardPage.");
+        dashPage.GetDashboardText().Should().Be(result, because: "The expected dashboard text was not found after successful login.");
     }
 }
