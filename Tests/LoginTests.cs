@@ -32,13 +32,13 @@ public class LoginTests
             "rando", 
             "Username is required" 
         };
-        // yield return new object[] 
-        // { 
-        //     Browser.Firefox, 
-        //     "rando", 
-        //     "rando", 
-        //     "Username is required" 
-        // };
+        yield return new object[] 
+        { 
+            Browser.Firefox, 
+            "rando", 
+            "rando", 
+            "Username is required" 
+        };
     }
 
     public static IEnumerable<object[]> GetBrowsersForPasswordRequired()
@@ -50,12 +50,12 @@ public class LoginTests
             "rando", 
             "Password is required" 
         };
-        // yield return new object[] { 
-        //     Browser.Firefox, 
-        //     "rando", 
-        //     "rando", 
-        //     "Password is required" 
-        // };
+        yield return new object[] { 
+            Browser.Firefox, 
+            "rando", 
+            "rando", 
+            "Password is required" 
+        };
     }
     public static IEnumerable<object[]> GetBrowsersForCorrectCredentials()
     {
@@ -66,13 +66,13 @@ public class LoginTests
             "secret_sauce", 
             "Swag Labs" 
         };
-        // yield return new object[] 
-        // { 
-        //     Browser.Firefox, 
-        //     "standard_user", 
-        //     "secret_sauce", 
-        //     "Swag Labs" 
-        // };
+        yield return new object[] 
+        { 
+            Browser.Firefox, 
+            "standard_user", 
+            "secret_sauce", 
+            "Swag Labs" 
+        };
     }
 
     [Theory]
