@@ -23,14 +23,14 @@ public static class DriverFactory
         {
             case Browser.Chrome:
                 var chromeOptions = new ChromeOptions();
-                // chromeOptions.AddArgument("--headless");
-                // chromeOptions.AddArgument("--disable-extensions");
-                // chromeOptions.AddArgument("--disable-gpu");
+                chromeOptions.AddArgument("--headless");
+                chromeOptions.AddArgument("--disable-extensions");
+                chromeOptions.AddArgument("--disable-gpu");
                 driver = new ChromeDriver(chromeOptions);
                 break;
             case Browser.Firefox:
                 var firefoxOptions = new FirefoxOptions();
-                // firefoxOptions.AddArgument("-headless");
+                firefoxOptions.AddArgument("-headless");
                 driver = new FirefoxDriver(firefoxOptions);
                 break;
             default:
