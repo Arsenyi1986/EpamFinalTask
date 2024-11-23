@@ -25,54 +25,22 @@ public class LoginTests
 
     public static IEnumerable<object[]> GetBrowsersForUsernameRequired()
     {
-        yield return new object[] 
-        { 
-            Browser.Chrome,
-            "rando", 
-            "rando", 
-            "Username is required" 
-        };
-        yield return new object[] 
-        { 
-            Browser.Firefox, 
-            "rando", 
-            "rando", 
-            "Username is required" 
-        };
+        yield return new object[] { Browser.Chrome,"rando", "rando", "Username is required" };
+        yield return new object[] { Browser.Firefox, "rando", "rando", "Username is required" };
     }
-
     public static IEnumerable<object[]> GetBrowsersForPasswordRequired()
     {
-        yield return new object[]
-        { 
-            Browser.Chrome, 
-            "rando", 
-            "rando", 
-            "Password is required" 
-        };
-        yield return new object[] { 
-            Browser.Firefox, 
-            "rando", 
-            "rando", 
-            "Password is required" 
-        };
+        yield return new object[] { Browser.Chrome, "rando", "rando", "Password is required" };
+        yield return new object[] { Browser.Firefox, "rando", "rando", "Password is required" };
     }
     public static IEnumerable<object[]> GetBrowsersForCorrectCredentials()
     {
-        yield return new object[] 
-        { 
-            Browser.Chrome, 
-            "standard_user", 
-            "secret_sauce", 
-            "Swag Labs" 
-        };
-        yield return new object[] 
-        { 
-            Browser.Firefox, 
-            "standard_user", 
-            "secret_sauce", 
-            "Swag Labs" 
-        };
+        yield return new object[] { Browser.Chrome, "standard_user", "secret_sauce", "Swag Labs" };
+        yield return new object[] { Browser.Firefox, "standard_user", "secret_sauce", "Swag Labs" };
+        yield return new object[] { Browser.Chrome, "performance_glitch_user", "secret_sauce", "Swag Labs" };
+        yield return new object[] { Browser.Firefox, "performance_glitch_user", "secret_sauce", "Swag Labs" };
+        yield return new object[] { Browser.Chrome, "visual_user", "secret_sauce", "Swag Labs" };
+        yield return new object[] { Browser.Firefox, "visual_user", "secret_sauce", "Swag Labs" };
     }
 
     [Theory]
