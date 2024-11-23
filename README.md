@@ -47,11 +47,9 @@ To run this project, make sure you have the following installed:
 - Selenium WebDriver for browser automation
 - ChromeDriver for running tests in the Chrome browser
 - GeckoDriver for running tests in the FireFox browser
-- EdgeDriver for running tests in the Microsoft Edge browser
 - xUnit for running and managing tests
 - Chrome Web Browser
 - FireFox Web Browser
-- Edge Web Browser
 
 ## How to Run
 1. Clone the repository.
@@ -65,7 +63,6 @@ To run the tests, you can specify which browser to use (Chrome or Firefox) by pr
 For example, using `xUnit`'s `InlineData`:
 - For Chrome: `InlineData("chrome", ...)`
 - For Firefox: `InlineData("firefox", ...)`
-- For Edge: `InlineData("edge", ...)`
 
 ## Tests
 - EmptyFieldsReturnUsernameReq: Test login form with empty credentials.

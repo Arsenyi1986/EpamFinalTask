@@ -34,7 +34,7 @@ public class LoginPage
         get => _passwordField;
     }
 
-    public void TextInput(string login, string password)
+    public void EnterCredentials(string login, string password)
     {
         _logger.Information("Passing inputs into fields...");
         _driver.FindElement(_loginField).SendKeys(login);
@@ -51,7 +51,7 @@ public class LoginPage
         _logger.Information("Done");
     }
 
-    public DashboardPage? Submit()
+    public void CLickSubmitButton()
     {
         _logger.Information("Submitting form...");
 
@@ -67,15 +67,6 @@ public class LoginPage
         {
             Console.WriteLine("The 'Submit button' element is not interactable");
         }
-
-        if (_wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(_errorBox)).Count > 0)
-        {
-            _logger.Error("Login failed. Error: {WebElement}", _driver.FindElement(_errorBox).Text);
-            return null;
-        }
-        
-        _logger.Information("Done. Login successful. Navigating to DashboardPage.");
-        return new DashboardPage(_driver, _logger);
     }
 
     public string? ReturnErrorInfo()
@@ -92,33 +83,4 @@ public class LoginPage
             return null;
         }
     }
-}
-
-public class DashboardPage
-{
-    private readonly IWebDriver _driver;
-    private readonly WebDriverWait _wait;
-    private readonly Serilog.Core.Logger _logger;
-    private readonly By? _logo = By.CssSelector(".app_logo");
-
-    public DashboardPage(IWebDriver driver, Serilog.Core.Logger logger)
-    {
-        this._driver = driver;
-        _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-        this._logger = logger;
-    }
-
-    public string GetDashboardText()
-    {
-        try
-        {
-            _logger.Information("Attempting to retrieve dashboard text...");
-            return _wait.Until(ExpectedConditions.ElementIsVisible(_logo)).Text;
-        }
-        catch (TimeoutException)
-        {
-            _logger.Error("Dashboard logo was not found in the expected amount of time.");
-            return string.Empty;
-        }
-    } 
 }

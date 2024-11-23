@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
     <PackageReference Include="selenium.webdriver" Version="4.26.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="serilog.sinks.file" Version="6.0.0" />
   </ItemGroup>
 
